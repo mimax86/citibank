@@ -2,7 +2,7 @@
 {
     public class DataSettings
     {
-        public int UpdateInterval { get; set; } = 60000;
+        public int UpdateInterval { get; set; } = 1000;
 
         public int PositionsCount { get; set; } = 10000;
 

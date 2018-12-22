@@ -40,13 +40,13 @@ namespace Citi.Data
 
             var symbolsCount = _symbols.Count;
             var generator = new Random();
-            for (var i = 0; i < _settings.PositionsCount; i++)
+            for (var i = 1; i < _settings.PositionsCount + 1; i++)
             {
                 var position = new PositionLevelRisk
                 {
                     PositionId = i,
                     Symbol = (Symbol) generator.Next(symbolsCount),
-                    Quantity = generator.NextDouble() * 100
+                    Quantity = generator.Next(1000)
                 };
                 _positions[position.Symbol].Add(position);
             }
