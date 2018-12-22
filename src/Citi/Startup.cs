@@ -32,14 +32,18 @@ namespace Citi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors("CorsPolicy");
             }
             else
             {
                 app.UseExceptionHandler("/Error");
             }
 
+            //app.UseWebSockets();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+            app.UseSignalR(routes => { routes.MapHub<UpdateHub>("/hub/update"); });
 
             app.UseMvc(routes =>
             {
@@ -56,7 +60,7 @@ namespace Citi
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-            app.UseSignalR(routes => { routes.MapHub<UpdateHub>("/hub/update"); });
+            
         }
     }
 }
