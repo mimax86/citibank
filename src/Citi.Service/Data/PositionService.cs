@@ -90,7 +90,7 @@ namespace Citi.Service.Data
                 updatedPositions.AddRange(_positions[changedSymbol]);
             }
 
-            _hub.Clients.All.SendAsync("ALL", updatedPositions.OrderBy(position => position.PositionId).ToArray());
+            _hub.Clients.All.SendAsync("position", updatedPositions.OrderBy(position => position.PositionId).ToArray());
         }
     }
 }

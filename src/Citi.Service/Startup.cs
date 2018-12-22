@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Citi.Service.Data;
 using Citi.Service.Hubs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Citi.Service
 {
@@ -20,6 +21,15 @@ namespace Citi.Service
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR(opts => opts.EnableDetailedErrors = true);
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", p =>
+                {
+                    p.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<PositionService>();
             services.AddTransient<PositionSettings>();
@@ -34,12 +44,16 @@ namespace Citi.Service
 
             app.UseSignalR(routes => { routes.MapHub<UpdateHub>("/update"); });
 
+            app.UseCors("AllowAll");
+
             app.UseMvc();
 
             lifetime.ApplicationStarted.Register(() =>
             {
                 app.ApplicationServices.GetService<PositionService>().Start();
             });
+
+            
         }
     }
 }

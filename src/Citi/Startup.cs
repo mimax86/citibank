@@ -1,5 +1,3 @@
-using Citi.Data;
-using Citi.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -20,11 +18,8 @@ namespace Citi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSignalR(opts => opts.EnableDetailedErrors = true);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
-            services.AddSingleton<DataSettings>();
-            services.AddSingleton<DataProcessor>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -40,8 +35,6 @@ namespace Citi
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
-
-            app.UseSignalR(routes => { routes.MapHub<UpdateHub>("/update"); });
 
             app.UseMvc(routes =>
             {

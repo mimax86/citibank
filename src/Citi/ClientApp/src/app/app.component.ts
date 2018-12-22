@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HubConnection, HubConnectionBuilder, HttpTransportType } from '@aspnet/signalr';
 
@@ -7,14 +7,13 @@ import { HubConnection, HubConnectionBuilder, HttpTransportType } from '@aspnet/
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  public positions: PositionLevelRisk[];
+  public positions: Position[];
   private connectionIsEstablished = false;
-  private _baseUrl: string;
+  private _baseUrl = 'http://localhost:52915/';
   private _hubConnection: HubConnection;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    this._baseUrl = baseUrl;
-    http.get<PositionLevelRisk[]>(baseUrl + 'api/Data/GetPositions').subscribe(result => {
+  constructor(http: HttpClient) {
+    http.get<Position[]>(this._baseUrl + 'api/position').subscribe(result => {
       this.positions = result;
     }, error => console.error(error));
     this.createConnection();
@@ -46,23 +45,24 @@ export class AppComponent {
   }
 
   private registerOnServerEvents(): void {
-    this._hubConnection.on('ALL', (data: any) => {
-      var updatedPositions = data as PositionLevelRisk[];
+    this._hubConnection.on('position', (data: any) => {
+      var updatedPositions = data as Position[];
       updatedPositions.forEach(updatedPosition => {
-        var position = this.positions.find(p => p.positionId === updatedPosition.positionId);
-        position.spot = updatedPosition.spot;
-        position.position = updatedPosition.position;
-        position.delta = updatedPosition.delta;
+        var position = this.positions.find(p => p.id === updatedPosition.id);
+        position.spt = updatedPosition.spt;
+        position.pos = updatedPosition.pos;
+        position.dlt = updatedPosition.dlt;
       });
     });
   }
 }
 
-interface PositionLevelRisk {
-  positionId: number;
-  symbol: string;
-  quantity: number;
-  spot: string;
-  position: string;
-  delta: string;
+
+interface Position {
+  id: number;
+  sbl: string;
+  q: number;
+  spt: string;
+  pos: string;
+  dlt: string;
 }

@@ -1,8 +1,6 @@
-<h1>Weather forecast</h1>
+<h1>Live Positions</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
-
-<p *ngIf="!positions"><em>Loading...</em></p>
+<p *ngIf="!positions"><em>Loading positions...</em></p>
 
 <table class='table' *ngIf="positions">
   <thead>
@@ -17,12 +15,12 @@
   </thead>
   <tbody>
   <tr *ngFor="let position of positions">
-    <td>{{ position.positionId }}</td>
-    <td>{{ position.symbol }}</td>
-    <td>{{ position.quantity }}</td>
-    <td>{{ position.spot }}</td>
-    <td>{{ position.position }}</td>
-    <td>{{ position.delta }}</td>
+    <td>{{ position.id }}</td>
+    <td>{{ position.sbl }}</td>
+    <td>{{ position.q }}</td>
+    <td>{{ position.spt }}</td>
+    <td>{{ position.pos }}</td>
+    <td>{{ position.dlt }}</td>
   </tr>
   </tbody>
 </table>
