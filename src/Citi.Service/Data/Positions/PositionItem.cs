@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Citi.Service.Data
+namespace Citi.Service.Data.Positions
 {
     public class PositionItem
     {
@@ -11,8 +11,7 @@ namespace Citi.Service.Data
         [JsonConverter(typeof(StringEnumConverter))]
         public Symbol Symbol { get; set; }
 
-        [JsonProperty("q")]
-        public int Quantity { get; set; }
+        [JsonProperty("q")] public int Quantity { get; set; }
 
         [JsonProperty("spt")]
         [JsonConverter(typeof(DecimalConverter), ".")]

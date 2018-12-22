@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Citi.Service.Data;
+using Citi.Service.Data.Prices;
 using Citi.Service.Hubs;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Citi.Service
 {
@@ -31,8 +31,9 @@ namespace Citi.Service
                 });
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton<SpotService>();
             services.AddSingleton<PositionService>();
-            services.AddTransient<PositionSettings>();
+            services.AddTransient<DataGenerationSettings>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime lifetime)
@@ -52,8 +53,6 @@ namespace Citi.Service
             {
                 app.ApplicationServices.GetService<PositionService>().Start();
             });
-
-            
         }
     }
 }

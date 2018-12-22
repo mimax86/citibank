@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Citi.Service.Data;
+using Citi.Service.Data.Positions;
 
 namespace Citi.Service.Controllers
 {
