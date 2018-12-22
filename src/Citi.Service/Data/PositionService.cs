@@ -59,7 +59,7 @@ namespace Citi.Service.Data
             foreach (var symbol in _symbols)
             {
                 _prices[symbol] = generator.NextDouble() * 1000;
-                _positions[symbol].ForEach(position => position.UpdateSpot(_prices[symbol]));
+                _positions[symbol].ForEach(position => position.UpdateSpot((decimal) _prices[symbol]));
             }
         }
 
@@ -86,7 +86,7 @@ namespace Citi.Service.Data
             foreach (var changedSymbol in changedSymbols)
             {
                 _prices[changedSymbol] *= (generator.NextDouble() + 0.5);
-                _positions[changedSymbol].ForEach(position => position.UpdateSpot(_prices[changedSymbol]));
+                _positions[changedSymbol].ForEach(position => position.UpdateSpot((decimal) _prices[changedSymbol]));
                 updatedPositions.AddRange(_positions[changedSymbol]);
             }
 

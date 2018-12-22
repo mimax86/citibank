@@ -5,8 +5,7 @@ namespace Citi.Service.Data
 {
     public class PositionItem
     {
-        [JsonProperty("id")]
-        public int PositionId { get; set; }
+        [JsonProperty("id")] public int PositionId { get; set; }
 
         [JsonProperty("sbl")]
         [JsonConverter(typeof(StringEnumConverter))]
@@ -16,19 +15,23 @@ namespace Citi.Service.Data
         public int Quantity { get; set; }
 
         [JsonProperty("spt")]
-        public string Spot { get; set; }
+        [JsonConverter(typeof(DecimalConverter), ".")]
+        public decimal Spot { get; set; }
 
         [JsonProperty("pos")]
-        public string Position { get; set; }
+        [JsonConverter(typeof(DecimalConverter), ",")]
+        public decimal Position { get; set; }
 
         [JsonProperty("dlt")]
-        public string Delta { get; set; }
+        [JsonConverter(typeof(DecimalConverter), ".")]
+        public decimal Delta { get; set; }
 
-        public void UpdateSpot(double spot)
+        public void UpdateSpot(decimal spot)
         {
-            Spot = spot.ToString("0.##");
-            Position = (spot * Quantity).ToString("0.##");
-            Delta = (spot * Quantity * 0.01).ToString("0.##");
+            Spot = spot;
+            var position = spot * Quantity;
+            Position = position;
+            Delta = position * 0.01m;
         }
     }
 }
