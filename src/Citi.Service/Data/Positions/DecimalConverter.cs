@@ -2,7 +2,7 @@
 using System.Globalization;
 using Newtonsoft.Json;
 
-namespace Citi.Service.Data
+namespace Citi.Service.Data.Positions
 {
     public class DecimalConverter : JsonConverter<decimal>
     {

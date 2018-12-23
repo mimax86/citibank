@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Citi.Service.Data
+namespace Citi.Service.Data.Positions
 {
     public enum Symbol
     {

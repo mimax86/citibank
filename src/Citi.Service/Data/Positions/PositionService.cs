@@ -60,7 +60,7 @@ namespace Citi.Service.Data.Positions
         private void UpdatePositions()
         {
             var updatedPositions = new List<PositionItem>();
-            var prices = _spotService.GetPrices(out List<Symbol> updatedSymbols);
+            var prices = _spotService.GetPrices(out var updatedSymbols);
 
             foreach (var updatedSymbol in updatedSymbols)
             {
