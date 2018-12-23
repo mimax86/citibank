@@ -4,23 +4,23 @@
 
 <table class='table' *ngIf="positions">
   <thead>
-  <tr>
-    <th>PositionId</th>
-    <th>Symbol</th>
-    <th>Quantity</th>
-    <th>Spot</th>
-    <th>Position</th>
-    <th>Delta</th>
-  </tr>
+    <tr>
+      <th>PositionId</th>
+      <th>Symbol</th>
+      <th>Quantity</th>
+      <th>Spot</th>
+      <th>Position</th>
+      <th>Delta</th>
+    </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let position of positions">
-    <td>{{ position.id }}</td>
-    <td>{{ position.sbl }}</td>
-    <td>{{ position.q }}</td>
-    <td>{{ position.spt }}</td>
-    <td>{{ position.pos }}</td>
-    <td>{{ position.dlt }}</td>
-  </tr>
+    <tr *ngFor="let position of positions">
+      <td>{{ position.id }}</td>
+      <td>{{ position.sbl }}</td>
+      <td>{{ position.q }}</td>
+      <td>{{ position.spt }}</td>
+      <td>{{ position.pos }}</td>
+      <td>{{ position.dlt }}</td>
+    </tr>
   </tbody>
 </table>
