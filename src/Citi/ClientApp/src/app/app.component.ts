@@ -10,11 +10,11 @@ import { HubConnection, HubConnectionBuilder, HttpTransportType } from '@aspnet/
 export class AppComponent {
   public positions: Position[];
   private connectionIsEstablished = false;
-  private _baseUrl = 'http://localhost:52915/';
+  private _serviceUrl = 'http://localhost:52915/';
   private _hubConnection: HubConnection;
 
   constructor(http: HttpClient) {
-    http.get<Position[]>(this._baseUrl + 'api/position').subscribe(result => {
+    http.get<Position[]>(this._serviceUrl + 'api/position').subscribe(result => {
       this.positions = result;
     }, error => console.error(error));
     this.createConnection();
@@ -24,7 +24,7 @@ export class AppComponent {
 
   private createConnection() {
     this._hubConnection = new HubConnectionBuilder()
-      .withUrl(this._baseUrl + 'update',
+      .withUrl(this._serviceUrl + 'update',
         {
           skipNegotiation: true,
           transport: HttpTransportType.WebSockets
