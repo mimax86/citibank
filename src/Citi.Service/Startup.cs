@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Citi.Service.Data;
+using Citi.Service.Data.Positions;
 using Citi.Service.Data.Prices;
 using Citi.Service.Hubs;
+using Citi.Service.Timing;
 
 namespace Citi.Service
 {
@@ -31,6 +33,7 @@ namespace Citi.Service
                 });
             });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddTransient<ITimerFactory, TimerFactory>();
             services.AddSingleton<SpotService>();
             services.AddSingleton<PositionService>();
             services.AddTransient<DataGenerationSettings>();

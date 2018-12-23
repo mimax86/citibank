@@ -1,33 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using Citi.Service.Data.Positions;
 using Citi.Service.Data.Prices;
 using Citi.Service.Hubs;
+using Citi.Service.Timing;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Citi.Service.Data
+namespace Citi.Service.Data.Positions
 {
     public class PositionService
     {
         private readonly SpotService _spotService;
         private readonly DataGenerationSettings _settings;
         private readonly IHubContext<UpdateHub> _updateHub;
+        private readonly ITimer _timer;
         private Dictionary<Symbol, List<PositionItem>> _positions;
-        private Timer _timer;
 
-        public PositionService(SpotService spotService, DataGenerationSettings settings, IHubContext<UpdateHub> updateHub)
+        public PositionService(SpotService spotService, ITimerFactory timerFactory, DataGenerationSettings settings,
+            IHubContext<UpdateHub> updateHub)
         {
             _spotService = spotService;
             _settings = settings;
             _updateHub = updateHub;
+            _timer = timerFactory.Create(UpdatePositions);
         }
 
         public void Start()
         {
             LoadPositions();
-            _timer = new Timer(UpdatePositions, null, _settings.UpdateInterval, _settings.UpdateInterval);
+            _timer.Start();
         }
 
         public List<PositionItem> GetPositions()
@@ -56,7 +57,7 @@ namespace Citi.Service.Data
             }
         }
 
-        private void UpdatePositions(object state)
+        private void UpdatePositions()
         {
             var updatedPositions = new List<PositionItem>();
             var prices = _spotService.GetPrices(out List<Symbol> updatedSymbols);
