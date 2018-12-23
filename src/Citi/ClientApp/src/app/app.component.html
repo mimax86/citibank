@@ -2,25 +2,20 @@
 
 <p *ngIf="!positions"><em>Loading positions...</em></p>
 
-<table class='table' *ngIf="positions">
-  <thead>
+<p-table [columns]="columns" [value]="positions">
+  <ng-template pTemplate="header" let-columns>
     <tr>
-      <th>PositionId</th>
-      <th>Symbol</th>
-      <th>Quantity</th>
-      <th>Spot</th>
-      <th>Position</th>
-      <th>Delta</th>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{col.header}}
+        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+      </th>
     </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let position of positions">
-      <td>{{ position.id }}</td>
-      <td>{{ position.sbl }}</td>
-      <td>{{ position.q }}</td>
-      <td>{{ position.spt }}</td>
-      <td>{{ position.pos }}</td>
-      <td>{{ position.dlt }}</td>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns">
+        {{rowData[col.field]}}
+      </td>
     </tr>
-  </tbody>
-</table>
+  </ng-template>
+  </p-table>

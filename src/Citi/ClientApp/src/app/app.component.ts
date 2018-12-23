@@ -12,8 +12,18 @@ export class AppComponent {
   private connectionIsEstablished = false;
   private _serviceUrl = 'http://localhost:52915/';
   private _hubConnection: HubConnection;
+  public columns: any[];
 
   constructor(http: HttpClient) {
+    this.columns = [
+      { field: 'id', header: 'PositionId' },
+      { field: 'sbl', header: 'Symbol' },
+      { field: 'q', header: 'Quantity' },
+      { field: 'spt', header: 'Spot' },
+      { field: 'pos', header: 'Position' },
+      { field: 'dlt', header: 'Delta' }
+    ];
+
     http.get<Position[]>(this._serviceUrl + 'api/position').subscribe(result => {
       this.positions = result;
     }, error => console.error(error));
